@@ -1,0 +1,196 @@
+could not detect version_main.therefore, we are assuming it is chrome 108 or higher
+
+[2025-04-29 19:10:41] Starting housing scrape job...
+
+Scraping page 1...
+[19:10:56] Scraping building 1 of page 1
+[19:11:07] Scraping building 2 of page 1
+Bronze table ensured.
+Inserted 65 listings into bronze_listings table.
+Silver table ensured.
+Cleared existing Silver listings for 2025-04-29
+Traceback (most recent call last):
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\run.py", line 13, in <module>
+    cleaner.promote_bronze_to_silver()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\cleaner\cleaner.py", line 166, in promote_bronze_to_silver
+    cursor.execute('''
+    ~~~~~~~~~~~~~~^^^^
+        INSERT INTO silver_listings (
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ''', cleaned)
+    ^^^^^^^^^^^^^
+sqlite3.OperationalError: table silver_listings has no column named scrape_timestamp
+Exception ignored in: <function Chrome.__del__ at 0x00000269142A0360>
+Traceback (most recent call last):
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\venv\Lib\site-packages\undetected_chromedriver\__init__.py", line 843, in __del__
+    self.quit()
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\venv\Lib\site-packages\undetected_chromedriver\__init__.py", line 798, in quit
+    time.sleep(0.1)
+OSError: [WinError 6] The handle is invalid
+could not detect version_main.therefore, we are assuming it is chrome 108 or higher
+
+[2025-04-29 19:16:02] Starting housing scrape job...
+
+Scraping page 1...
+[19:16:17] Scraping building 1 of page 1
+[19:16:29] Scraping building 2 of page 1
+Bronze table ensured.
+Inserted 37 listings into bronze_listings table.
+Silver table ensured.
+Cleared existing Silver listings for 2025-04-29
+Traceback (most recent call last):
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\run.py", line 13, in <module>
+    cleaner.promote_bronze_to_silver()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\cleaner\cleaner.py", line 166, in promote_bronze_to_silver
+    cursor.execute('''
+    ~~~~~~~~~~~~~~^^^^
+        INSERT INTO silver_listings (
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ''', cleaned)
+    ^^^^^^^^^^^^^
+sqlite3.OperationalError: table silver_listings has no column named scrape_timestamp
+Exception ignored in: <function Chrome.__del__ at 0x000001A1A3E80360>
+Traceback (most recent call last):
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\venv\Lib\site-packages\undetected_chromedriver\__init__.py", line 843, in __del__
+    self.quit()
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\venv\Lib\site-packages\undetected_chromedriver\__init__.py", line 798, in quit
+    time.sleep(0.1)
+OSError: [WinError 6] The handle is invalid
+could not detect version_main.therefore, we are assuming it is chrome 108 or higher
+
+[2025-04-30 08:00:04] Starting housing scrape job...
+
+Scraping page 1...
+[08:00:25] Scraping building 1 of page 1
+[08:00:35] Scraping building 2 of page 1
+[08:00:45] Scraping building 3 of page 1
+[08:00:54] Scraping building 4 of page 1
+[08:01:05] Scraping building 5 of page 1
+[08:01:13] Scraping building 6 of page 1
+[08:01:21] Scraping building 7 of page 1
+[08:01:30] Scraping building 8 of page 1
+[08:01:40] Scraping building 9 of page 1
+[08:01:49] Scraping building 10 of page 1
+[08:01:58] Scraping building 11 of page 1
+[08:02:07] Scraping building 12 of page 1
+[08:02:16] Scraping building 13 of page 1
+[08:02:25] Scraping building 14 of page 1
+[08:02:34] Scraping building 15 of page 1
+[08:02:44] Scraping building 16 of page 1
+[08:02:53] Scraping building 17 of page 1
+[08:03:03] Scraping building 18 of page 1
+[08:03:12] Scraping building 19 of page 1
+[08:03:23] Scraping building 20 of page 1
+[08:03:32] Scraping building 21 of page 1
+[08:03:41] Scraping building 22 of page 1
+[08:03:51] Scraping building 23 of page 1
+[08:04:01] Scraping building 24 of page 1
+[08:04:11] Scraping building 25 of page 1
+[08:04:20] Scraping building 26 of page 1
+[08:04:28] Scraping building 27 of page 1
+[08:04:38] Scraping building 28 of page 1
+[08:04:48] Scraping building 29 of page 1
+[08:04:57] Scraping building 30 of page 1
+[08:05:07] Scraping building 31 of page 1
+[08:05:15] Scraping building 32 of page 1
+[08:05:24] Scraping building 33 of page 1
+[08:05:33] Scraping building 34 of page 1
+[08:05:44] Scraping building 35 of page 1
+[08:05:53] Scraping building 36 of page 1
+[08:06:02] Scraping building 37 of page 1
+[08:06:13] Scraping building 38 of page 1
+[08:06:22] Scraping building 39 of page 1
+[08:06:32] Scraping building 40 of page 1
+Scraping page 2...
+[08:06:48] Scraping building 41 of page 2
+[08:06:57] Scraping building 42 of page 2
+[08:07:06] Scraping building 43 of page 2
+[08:07:17] Scraping building 44 of page 2
+[08:07:28] Scraping building 45 of page 2
+[08:07:37] Scraping building 46 of page 2
+[08:07:48] Scraping building 47 of page 2
+[08:07:58] Scraping building 48 of page 2
+[08:08:06] Scraping building 49 of page 2
+[08:08:15] Scraping building 50 of page 2
+[08:08:25] Scraping building 51 of page 2
+[08:08:33] Scraping building 52 of page 2
+[08:08:44] Scraping building 53 of page 2
+[08:08:53] Scraping building 54 of page 2
+[08:09:02] Scraping building 55 of page 2
+[08:09:11] Scraping building 56 of page 2
+[08:09:22] Scraping building 57 of page 2
+[08:09:32] Scraping building 58 of page 2
+[08:09:42] Scraping building 59 of page 2
+[08:09:51] Scraping building 60 of page 2
+[08:10:04] Scraping building 61 of page 2
+[08:10:12] Scraping building 62 of page 2
+[08:10:23] Scraping building 63 of page 2
+[08:10:32] Scraping building 64 of page 2
+[08:10:41] Scraping building 65 of page 2
+[08:10:52] Scraping building 66 of page 2
+[08:11:01] Scraping building 67 of page 2
+[08:11:09] Scraping building 68 of page 2
+[08:11:19] Scraping building 69 of page 2
+[08:11:27] Scraping building 70 of page 2
+[08:11:39] Scraping building 71 of page 2
+[08:11:48] Scraping building 72 of page 2
+[08:11:57] Scraping building 73 of page 2
+[08:12:06] Scraping building 74 of page 2
+[08:12:14] Scraping building 75 of page 2
+[08:12:23] Scraping building 76 of page 2
+[08:12:32] Scraping building 77 of page 2
+[08:12:41] Scraping building 78 of page 2
+[08:12:52] Scraping building 79 of page 2
+[08:13:00] Scraping building 80 of page 2
+Scraping page 3...
+[08:13:14] Scraping building 81 of page 3
+[08:13:24] Scraping building 82 of page 3
+[08:13:32] Scraping building 83 of page 3
+[08:13:41] Scraping building 84 of page 3
+[08:13:50] Scraping building 85 of page 3
+[08:14:01] Scraping building 86 of page 3
+[08:14:09] Scraping building 87 of page 3
+[08:14:19] Scraping building 88 of page 3
+[08:14:28] Scraping building 89 of page 3
+[08:14:37] Scraping building 90 of page 3
+[08:14:48] Scraping building 91 of page 3
+[08:14:56] Scraping building 92 of page 3
+[08:15:04] Scraping building 93 of page 3
+[08:15:13] Scraping building 94 of page 3
+[08:15:21] Scraping building 95 of page 3
+[08:15:30] Scraping building 96 of page 3
+[08:15:38] Scraping building 97 of page 3
+[08:15:48] Scraping building 98 of page 3
+[08:15:59] Scraping building 99 of page 3
+[08:16:09] Scraping building 100 of page 3
+[08:16:17] Scraping building 101 of page 3
+Bronze table ensured.
+Inserted 707 listings into bronze_listings table.
+Silver table ensured.
+Cleared existing Silver listings for 2025-04-29
+Promoted 719 listings into silver_listings table.
+Gold table ensured.
+Promoted 2 scrape days into gold_metrics table.
+Traceback (most recent call last):
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\run.py", line 15, in <module>
+    print(f"\n[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] \u2705 Job complete.\n")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\firew\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 24: character maps to <undefined>
+Exception ignored in: <function Chrome.__del__ at 0x000002C297A40360>
+Traceback (most recent call last):
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\venv\Lib\site-packages\undetected_chromedriver\__init__.py", line 843, in __del__
+    self.quit()
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\venv\Lib\site-packages\undetected_chromedriver\__init__.py", line 798, in quit
+    time.sleep(0.1)
+OSError: [WinError 6] The handle is invalid
