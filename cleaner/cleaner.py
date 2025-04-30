@@ -1,11 +1,16 @@
-# cleaner/cleaner.py
-
 import sqlite3
 import os
 import re
 import statistics
+import logging
 
-DB_NAME = 'housing_tracker.db'
+# --------------------
+# Setup
+# --------------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_NAME = os.environ.get("DB_PATH", os.path.join(BASE_DIR, "../housing_tracker.db"))
+
+logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 ZIP_TO_NEIGHBORHOOD = {
     "50309": "Downtown",
@@ -21,8 +26,6 @@ ZIP_TO_NEIGHBORHOOD = {
     "50321": "Airport/SW",
     "50322": "Urbandale (DSM)",
     "50327": "Pleasant Hill",
-
-    # Suburbs
     "50265": "Valley Junction (West Des Moines)",
     "50266": "Jordan Creek (West Des Moines)",
     "50023": "Northwest Ankeny",
@@ -46,7 +49,6 @@ def get_db_connection():
 def create_silver_table():
     conn = get_db_connection()
     cursor = conn.cursor()
-
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS silver_listings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -69,51 +71,64 @@ def create_silver_table():
             scrape_timestamp TEXT
         )
     ''')
-
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_silver_date ON silver_listings(scrape_date)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_silver_zip ON silver_listings(zipcode)')
     conn.commit()
     conn.close()
-    print("Silver table ensured.")
+    logging.info("Silver table and indexes ensured.")
 
-# --- Normalizers ---
+# --------------------
+# Normalizers w/ Type Guards
+# --------------------
 def normalize_address(raw):
     return raw.strip().rstrip(',') if raw else None
 
 def normalize_availability(raw):
     if not raw:
         return None
-    cleaned = raw.replace('availability', '').replace('availibility', '')  # covers typos
+    cleaned = raw.replace('availability', '').replace('availibility', '')
     return cleaned.strip().title()
 
 def normalize_price(raw):
-    if not raw:
+    try:
+        if not raw:
+            return None
+        match = re.search(r'\d+', raw.replace(',', ''))
+        return int(match.group()) if match else None
+    except:
         return None
-    match = re.search(r'\d+', raw.replace(',', ''))
-    return int(match.group()) if match else None
 
 def normalize_beds(raw):
-    if not raw:
+    try:
+        if not raw:
+            return None
+        if "studio" in raw.lower():
+            return 0
+        match = re.search(r'\d+', raw)
+        return int(match.group()) if match else None
+    except:
         return None
-    if "studio" in raw.lower():
-        return 0
-    match = re.search(r'\d+', raw)
-    return int(match.group()) if match else None
 
 def normalize_baths(raw):
-    if not raw:
+    try:
+        if not raw:
+            return None
+        match = re.search(r'\d+(\.\d+)?', raw)
+        return float(match.group()) if match else None
+    except:
         return None
-    match = re.search(r'\d+(\.\d+)?', raw)
-    return float(match.group()) if match else None
 
 def normalize_sqft(raw):
-    if not raw:
+    try:
+        if not raw:
+            return None
+        match = re.search(r'\d+', raw.replace(',', ''))
+        return int(match.group()) if match else None
+    except:
         return None
-    match = re.search(r'\d+', raw.replace(',', ''))
-    return int(match.group()) if match else None
 
 def normalize_zip(zipcode):
-    if not zipcode:
-        return None
-    match = re.search(r'\d{5}', zipcode)
+    match = re.search(r'\d{5}', zipcode) if zipcode else None
     return match.group() if match else None
 
 def normalize_city(city):
@@ -122,44 +137,45 @@ def normalize_city(city):
 def normalize_state(state):
     return state.strip().upper() if state else None
 
-def get_neighborhood(zipcode):  
+def get_neighborhood(zipcode):
     return ZIP_TO_NEIGHBORHOOD.get(zipcode, "General Area")
 
+# --------------------
+# Promote Bronze → Silver
+# --------------------
 
 def promote_bronze_to_silver():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    cursor.execute('SELECT * FROM bronze_listings')
+    cursor.execute('SELECT * FROM bronze_listings ORDER BY scrape_timestamp DESC LIMIT 1')
+    latest_timestamp = cursor.fetchone()['scrape_timestamp']
+    latest_date = latest_timestamp[:10]  # 'YYYY-MM-DD'
+
+    cursor.execute('SELECT * FROM bronze_listings WHERE scrape_date = ?', (latest_date,))
     rows = cursor.fetchall()
 
+
     if not rows:
-        print("No bronze listings to promote.")
+        logging.warning("No bronze listings to promote.")
         return
 
     scrape_date = rows[0]['scrape_date']
     create_silver_table()
     cursor.execute('DELETE FROM silver_listings WHERE scrape_date = ?', (scrape_date,))
-    print(f"Cleared existing Silver listings for {scrape_date}")
+    logging.info(f"Cleared existing Silver listings for {scrape_date}")
 
-
-    seen_units = set()
     cleaned_rows = []
-
     for row in rows:
         if not row['building_name'] or not row['price_raw']:
+            logging.warning(f"Skipping row with missing building name or price: {row['building_name']}, {row['price_raw']}")
             continue
-
-        dedup_key = f"{row['building_name']}::{row['unit_id']}"
-        if dedup_key in seen_units:
-            continue
-        seen_units.add(dedup_key)
 
         zipcode = normalize_zip(row['zipcode'])
         neighborhood = get_neighborhood(zipcode)
 
-        cleaned_rows.append((
-            row['building_name'],                            # title
+        cleaned = (
+            row['building_name'],
             normalize_address(row['address']),
             normalize_city(row['city']),
             normalize_state(row['state']),
@@ -176,9 +192,8 @@ def promote_bronze_to_silver():
             row['listing_url'],
             row['scrape_date'],
             row['scrape_timestamp']
-        ))
-
-    
+        )
+        cleaned_rows.append(cleaned)
 
     for cleaned in cleaned_rows:
         cursor.execute('''
@@ -193,7 +208,7 @@ def promote_bronze_to_silver():
 
     conn.commit()
     conn.close()
-    print(f"Promoted {len(cleaned_rows)} listings into silver_listings table.")
+    logging.info(f"Promoted {len(cleaned_rows)} listings into silver_listings table.")
 
 # --------------------
 # GOLD LAYER
@@ -217,10 +232,10 @@ def create_gold_table():
             listing_count INTEGER
         )
     ''')
-
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_gold_date ON gold_metrics(scrape_date)')
     conn.commit()
     conn.close()
-    print("Gold table ensured.")
+    logging.info("Gold table and index ensured.")
 
 def promote_silver_to_gold():
     conn = get_db_connection()
@@ -228,8 +243,6 @@ def promote_silver_to_gold():
 
     cursor.execute('SELECT * FROM silver_listings')
     rows = cursor.fetchall()
-    
-
 
     data_by_date = {}
     for row in rows:
@@ -267,16 +280,13 @@ def promote_silver_to_gold():
 
         avg_price = sum(values['prices']) / count
         median_price = statistics.median(values['prices'])
-
         avg_price_per_sqft = sum(values['price_per_sqft']) / len(values['price_per_sqft']) if values['price_per_sqft'] else None
         median_price_per_sqft = statistics.median(values['price_per_sqft']) if values['price_per_sqft'] else None
-
         avg_sqft = sum(values['sqfts']) / len(values['sqfts']) if values['sqfts'] else None
         avg_beds = sum(values['beds']) / len(values['beds']) if values['beds'] else None
         avg_baths = sum(values['baths']) / len(values['baths']) if values['baths'] else None
 
         cursor.execute('DELETE FROM gold_metrics WHERE scrape_date = ?', (date,))
-
         cursor.execute('''
             INSERT INTO gold_metrics (
                 scrape_date, median_price, avg_price,
@@ -291,7 +301,7 @@ def promote_silver_to_gold():
 
     conn.commit()
     conn.close()
-    print(f"Promoted {len(data_by_date)} scrape days into gold_metrics table.")
+    logging.info(f"Promoted {len(data_by_date)} scrape days into gold_metrics table.")
 
 # --------------------
 # CLI

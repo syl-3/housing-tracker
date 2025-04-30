@@ -2,8 +2,13 @@
 
 import sqlite3
 import os
+import logging
 
-DB_NAME = 'housing_tracker.db'
+# Use dynamic path to allow deployment to Fly.io or other servers
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_NAME = os.environ.get("DB_PATH", os.path.join(BASE_DIR, "../housing_tracker.db"))
+
+logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 def get_db_connection():
     conn = sqlite3.connect(DB_NAME)
@@ -36,9 +41,12 @@ def create_bronze_table():
         )
     ''')
 
+    # Add index to help future date filtering / dashboard speed
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_bronze_scrape_date ON bronze_listings(scrape_date)')
+
     conn.commit()
     conn.close()
-    print("Bronze table ensured.")
+    logging.info("Bronze table and index ensured.")
 
 def clear_bronze_table():
     conn = get_db_connection()
@@ -48,7 +56,7 @@ def clear_bronze_table():
 
     conn.commit()
     conn.close()
-    print("Bronze table cleared.")
+    logging.info("Bronze table cleared.")
 
 def insert_bronze_listing(listing):
     conn = get_db_connection()
