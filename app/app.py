@@ -15,6 +15,24 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+def generate_signature(row):
+    def normalize(val):
+        if val is None:
+            return ""
+        if isinstance(val, (int, float)):
+            return f"{float(val):.1f}".rstrip('0').rstrip('.')  # e.g., 2.0 → "2", 2.5 → "2.5"
+        return str(val).strip().lower()
+
+    return "|".join([
+        normalize(row["unit_id"]),
+        normalize(row["title"]),
+        normalize(row["unit_name"]),
+        normalize(row["beds"]),
+        normalize(row["baths"]),
+        normalize(row["sqft"])
+    ])
+
+
 def create_app():
     app = Flask(__name__)
     CORS(app)
@@ -135,7 +153,16 @@ def create_app():
     @app.route("/api/silver-changes")
     def silver_changes():
         conn = get_db_connection()
-        dates = conn.execute("SELECT DISTINCT scrape_date FROM silver_listings ORDER BY scrape_date DESC LIMIT 2").fetchall()
+        date_param = request.args.get("date")
+        if not date_param:
+            return jsonify({"error": "Missing 'date' query param"}), 400
+
+        dates = conn.execute("""
+            SELECT DISTINCT scrape_date FROM silver_listings
+            WHERE scrape_date <= ?
+            ORDER BY scrape_date DESC LIMIT 2
+        """, (date_param,)).fetchall()
+
         if len(dates) < 2:
             return jsonify({ "error": "Not enough data" }), 400
 
@@ -144,21 +171,12 @@ def create_app():
         previous_units = conn.execute("SELECT * FROM silver_listings WHERE scrape_date = ?", (previous,)).fetchall()
         conn.close()
 
-        def build_signature(row):
-            def safe(val):
-                return str(val).strip().lower() if val is not None else ""
-            return "|".join([
-                safe(row["unit_id"]),
-                safe(row["title"]),
-                safe(row["unit_name"]),
-                safe(row["beds"]),
-                safe(row["baths"]),
-                safe(row["sqft"]),
-            ])
+        # Remove build_signature entirely — replace all its usage with generate_signature
 
 
-        latest_map = {build_signature(r): float(r["price"]) for r in latest_units if r["price"] is not None}
-        previous_map = {build_signature(r): float(r["price"]) for r in previous_units if r["price"] is not None}
+
+        latest_map = {generate_signature(r): float(r["price"]) for r in latest_units if r["price"] is not None}
+        previous_map = {generate_signature(r): float(r["price"]) for r in previous_units if r["price"] is not None}
 
 
         print(f"[DEBUG] Today's unique signatures: {len(latest_map)}")

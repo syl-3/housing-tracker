@@ -7,12 +7,33 @@ export default function Explore() {
   const [searchInput, setSearchInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const debounceTimer = useRef(null);
+  const [searchField, setSearchField] = useState("title");
 
   const [priceChanges, setPriceChanges] = useState({
     changes: {},
     latest_date: "",
     previous_date: ""
   });
+
+  const generateSignature = (listing) => {
+  const normalize = (val) => {
+    if (val == null) return "";
+    if (typeof val === "number") {
+      return val % 1 === 0 ? String(val) : val.toFixed(1).replace(/\.0$/, "");
+    }
+    return val.toString().trim().toLowerCase();
+  };
+
+  return [
+    normalize(listing.unit_id),
+    normalize(listing.title),
+    normalize(listing.unit_name),
+    normalize(listing.beds),
+    normalize(listing.baths),
+    normalize(listing.sqft)
+  ].join("|");
+};
+
 
   useEffect(() => {
     if (debounceTimer.current) clearTimeout(debounceTimer.current);
@@ -59,14 +80,8 @@ export default function Explore() {
       return val.toString().trim().toLowerCase();
     };
 
-    const signature = [
-      normalize(listing.unit_id),
-      normalize(listing.title?.toLowerCase()),      // normalize title to lowercase
-      normalize(listing.unit_name?.toLowerCase()),  // normalize unit_name to lowercase
-      normalize(listing.beds),
-      normalize(listing.baths),
-      normalize(listing.sqft)
-    ].join("|");
+    const signature = generateSignature(listing);
+
 
     const changeData = priceChanges?.changes?.[signature];
     console.log("🔍 Signature:", signature);
@@ -119,13 +134,43 @@ export default function Explore() {
             </select>
           </div>
 
-          <input
-            type="text"
-            placeholder="Search listings..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            className="border rounded px-2 py-1 text-sm w-full sm:w-64"
-          />
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 text-sm">
+  
+
+  <div className="flex items-center gap-2">
+    <label htmlFor="searchField" className=" font-medium text-zinc-700">
+      Search by:
+    </label>
+    <select
+      id="searchField"
+      value={searchField}
+      onChange={(e) => setSearchField(e.target.value)}
+      className="border rounded px-2 py-1 text-sm"
+    >
+      <option value="title">Building</option>
+      <option value="unit_name">Unit Type</option>
+      <option value="unit_id">Unit ID</option>
+      <option value="price">Price</option>
+      <option value="beds">Beds</option>
+      <option value="baths">Baths</option>
+      <option value="sqft">Sqft</option>
+      <option value="zipcode">ZIP Code</option>
+      <option value="neighborhood">Neighborhood</option>
+      <option value="state">State</option>
+    </select>
+
+    <input
+      type="text"
+      placeholder="Search listings..."
+      value={searchInput}
+      onChange={(e) => setSearchInput(e.target.value)}
+      className="border rounded px-2 py-1 text-sm w-full sm:w-64"
+    />
+  </div>
+</div>
+
+
+
         </div>
       </div>
 
@@ -147,14 +192,18 @@ export default function Explore() {
           <tbody>
             {listings
               .filter(listing => {
-                const term = searchTerm.toLowerCase();
-                return (
-                  listing.title?.toLowerCase().includes(term) ||
-                  listing.unit_name?.toLowerCase().includes(term) ||
-                  listing.zipcode?.toString().includes(term) ||
-                  listing.neighborhood?.toLowerCase().includes(term)
-                );
+                const val = listing[searchField];
+                if (val == null) return false;
+
+                const fieldVal = typeof val === "number"
+                  ? String(val)
+                  : val.toString().toLowerCase();
+
+                return fieldVal.includes(searchTerm);
+              
               })
+
+              
               .map(listing => {
                 console.log("👀 Trying badge for:", {
                   unit_id: listing.unit_id,
