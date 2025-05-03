@@ -92,10 +92,6 @@ def create_silver_table():
 def normalize_address(raw):
     return raw.strip().rstrip(',') if raw else None
 
-def normalize_unit_name(name):
-    return name.strip().lower() if name else None
-
-
 def normalize_availability(raw):
     if not raw:
         return None
@@ -153,13 +149,6 @@ def normalize_state(state):
 def get_neighborhood(zipcode):
     return ZIP_TO_NEIGHBORHOOD.get(zipcode, "General Area")
 
-
-def format_float(value, decimals=1):
-    try:
-        return f"{float(value):.{decimals}f}"
-    except (TypeError, ValueError):
-        return ""
-
 # --------------------
 # Promote Bronze → Silver
 # --------------------
@@ -212,9 +201,9 @@ def promote_bronze_to_silver():
             zipcode,
             neighborhood,
             normalize_price(row['price_raw']),
-            format_float(normalize_beds(row['beds']), 1),
-            format_float(normalize_baths(row['baths']), 1),
-            str(normalize_sqft(row['sqft']) or ""),
+            normalize_beds(row['beds']),
+            normalize_baths(row['baths']),
+            normalize_sqft(row['sqft']),
             row['unit_name'],
             row['unit_id'],
             normalize_availability(row['available_move_in_date']),

@@ -73,10 +73,6 @@ def create_silver_table():
     ''')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_silver_date ON silver_listings(scrape_date)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_silver_zip ON silver_listings(zipcode)')
-    cursor.execute('CREATE INDEX IF NOT EXISTS idx_silver_date ON silver_listings(scrape_date)')
-    cursor.execute('CREATE INDEX IF NOT EXISTS idx_silver_zip ON silver_listings(zipcode)')
-
-# Prevent future duplicates of (unit_id + scrape_date)
     cursor.execute('''
         CREATE UNIQUE INDEX IF NOT EXISTS idx_silver_unique_unit_date
         ON silver_listings(unit_id, scrape_date)
@@ -87,7 +83,7 @@ def create_silver_table():
     logging.info("Silver table and indexes ensured.")
 
 # --------------------
-# Normalizers w/ Type Guards
+# Normalizers
 # --------------------
 def normalize_address(raw):
     return raw.strip().rstrip(',') if raw else None
@@ -95,6 +91,8 @@ def normalize_address(raw):
 def normalize_unit_name(name):
     return name.strip().lower() if name else None
 
+def normalize_building(title):
+    return title.strip().lower() if title else None
 
 def normalize_availability(raw):
     if not raw:
@@ -153,13 +151,6 @@ def normalize_state(state):
 def get_neighborhood(zipcode):
     return ZIP_TO_NEIGHBORHOOD.get(zipcode, "General Area")
 
-
-def format_float(value, decimals=1):
-    try:
-        return f"{float(value):.{decimals}f}"
-    except (TypeError, ValueError):
-        return ""
-
 # --------------------
 # Promote Bronze → Silver
 # --------------------
@@ -168,11 +159,9 @@ def promote_bronze_to_silver():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # Get the most recent scrape_date
     cursor.execute('SELECT scrape_date FROM bronze_listings ORDER BY scrape_timestamp DESC LIMIT 1')
     latest_date = cursor.fetchone()['scrape_date']
 
-    # Deduplicate by unit_id and get only the latest listing per unit
     cursor.execute('''
         SELECT * FROM bronze_listings 
         WHERE scrape_timestamp IN (
@@ -184,18 +173,14 @@ def promote_bronze_to_silver():
     ''', (latest_date,))
     rows = cursor.fetchall()
 
-
-
     if not rows:
         logging.warning("No bronze listings to promote.")
         return
 
-    scrape_date = rows[0]['scrape_date']
     create_silver_table()
-    cursor.execute('DELETE FROM silver_listings WHERE scrape_date = ?', (scrape_date,))
-    logging.info(f"Cleared existing Silver listings for {scrape_date}")
+    cursor.execute('DELETE FROM silver_listings WHERE scrape_date = ?', (latest_date,))
+    logging.info(f"Cleared existing Silver listings for {latest_date}")
 
-    cleaned_rows = []
     for row in rows:
         if not row['building_name'] or not row['price_raw']:
             logging.warning(f"Skipping row with missing building name or price: {row['building_name']}, {row['price_raw']}")
@@ -205,17 +190,17 @@ def promote_bronze_to_silver():
         neighborhood = get_neighborhood(zipcode)
 
         cleaned = (
-            row['building_name'],
+            normalize_building(row['building_name']),
             normalize_address(row['address']),
             normalize_city(row['city']),
             normalize_state(row['state']),
             zipcode,
             neighborhood,
             normalize_price(row['price_raw']),
-            format_float(normalize_beds(row['beds']), 1),
-            format_float(normalize_baths(row['baths']), 1),
-            str(normalize_sqft(row['sqft']) or ""),
-            row['unit_name'],
+            normalize_beds(row['beds']),
+            normalize_baths(row['baths']),
+            normalize_sqft(row['sqft']),
+            normalize_unit_name(row['unit_name']),
             row['unit_id'],
             normalize_availability(row['available_move_in_date']),
             row['total_available_units'],
@@ -223,13 +208,10 @@ def promote_bronze_to_silver():
             row['scrape_date'],
             row['scrape_timestamp']
         )
-        cleaned_rows.append(cleaned)
 
-    for cleaned in cleaned_rows:
-        unit_id = cleaned[11]  # index of unit_id in the cleaned tuple
-        scrape_date = cleaned[15]  # index of scrape_date in the cleaned tuple
+        unit_id = cleaned[11]
+        scrape_date = cleaned[15]
 
-    # Check if unit_id already exists for this scrape_date in Silver
         cursor.execute('''
             SELECT 1 FROM silver_listings
             WHERE unit_id = ? AND scrape_date = ?
@@ -250,10 +232,9 @@ def promote_bronze_to_silver():
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', cleaned)
 
-
     conn.commit()
     conn.close()
-    logging.info(f"Promoted {len(cleaned_rows)} listings into silver_listings table.")
+    logging.info(f"Promoted {len(rows)} listings into silver_listings table.")
 
 # --------------------
 # GOLD LAYER
@@ -262,7 +243,6 @@ def promote_bronze_to_silver():
 def create_gold_table():
     conn = get_db_connection()
     cursor = conn.cursor()
-
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS gold_metrics (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -288,16 +268,11 @@ def create_gold_table():
     conn.close()
     logging.info("Gold table and index ensured.")
 
-
 def promote_silver_to_gold():
     conn = get_db_connection()
     cursor = conn.cursor()
-
-    # Get the most recent scrape_date
-# Get all distinct scrape dates in Silver
     cursor.execute('SELECT DISTINCT scrape_date FROM silver_listings ORDER BY scrape_date ASC')
     scrape_dates = [row['scrape_date'] for row in cursor.fetchall()]
-
     data_by_date = {}
 
     for date in scrape_dates:
@@ -305,7 +280,6 @@ def promote_silver_to_gold():
         rows = cursor.fetchall()
 
         for row in rows:
-            date = row['scrape_date']
             if date not in data_by_date:
                 data_by_date[date] = {
                     'prices': [],
@@ -325,7 +299,7 @@ def promote_silver_to_gold():
 
             if price is not None:
                 data_by_date[date]['prices'].append(price)
-            if price and sqft and sqft != 0:
+            if price and sqft:
                 data_by_date[date]['price_per_sqft'].append(price / sqft)
             if sqft:
                 data_by_date[date]['sqfts'].append(sqft)
@@ -342,15 +316,13 @@ def promote_silver_to_gold():
 
             data_by_date[date]['count'] += 1
 
-
     create_gold_table()
 
     for date, values in data_by_date.items():
-        count = values['count']
-        if count == 0 or not values['prices']:
+        if values['count'] == 0 or not values['prices']:
             continue
 
-        avg_price = sum(values['prices']) / count
+        avg_price = sum(values['prices']) / values['count']
         median_price = statistics.median(values['prices'])
         min_price = min(values['prices'])
         max_price = max(values['prices'])
@@ -361,10 +333,6 @@ def promote_silver_to_gold():
         avg_sqft = sum(values['sqfts']) / len(values['sqfts']) if values['sqfts'] else None
         avg_beds = sum(values['beds']) / len(values['beds']) if values['beds'] else None
         avg_baths = sum(values['baths']) / len(values['baths']) if values['baths'] else None
-
-        studio_count = values['studio_count']
-        one_bed_count = values['one_bed_count']
-        two_plus_bed_count = values['two_plus_bed_count']
 
         cursor.execute('DELETE FROM gold_metrics WHERE scrape_date = ?', (date,))
         cursor.execute('''
@@ -378,20 +346,18 @@ def promote_silver_to_gold():
         ''', (
             date, median_price, avg_price,
             median_price_per_sqft, avg_price_per_sqft,
-            avg_sqft, avg_beds, avg_baths, count,
+            avg_sqft, avg_beds, avg_baths, values['count'],
             min_price, max_price, price_std_dev,
-            studio_count, one_bed_count, two_plus_bed_count
+            values['studio_count'], values['one_bed_count'], values['two_plus_bed_count']
         ))
 
     conn.commit()
     conn.close()
     logging.info(f"Promoted {len(data_by_date)} scrape days into gold_metrics table.")
 
-
 # --------------------
 # CLI
 # --------------------
-
 if __name__ == "__main__":
     promote_bronze_to_silver()
     promote_silver_to_gold()

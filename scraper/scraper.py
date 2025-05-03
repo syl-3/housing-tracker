@@ -5,6 +5,9 @@ import csv
 import os
 import re
 import logging
+import warnings
+import contextlib
+import ctypes
 import undetected_chromedriver as uc
 from datetime import datetime
 from selenium.webdriver.common.by import By
@@ -16,6 +19,17 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from database.database import create_bronze_table, insert_bronze_listing
 
 # Setup
+@contextlib.contextmanager
+def suppress_oserror_6():
+    try:
+        yield
+    except OSError as e:
+        if getattr(e, 'winerror', None) == 6:
+            pass
+        else:
+            raise
+
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 EXPORT_DIR = os.environ.get("CSV_EXPORT_PATH", os.path.join(BASE_DIR, "../csv_exports"))
 CHROME_PATH = os.environ.get("CHROMEDRIVER_PATH", ChromeDriverManager().install())
@@ -36,7 +50,7 @@ def fetch_listings():
     listings = []
     seen_building_urls = set()
     buildings_scraped = 0
-    building_limit = 1 #SHOULD BE 100
+    building_limit = 200 #SHOULD BE 200 as of May 2nd, 2025
 
     try:
         url = "https://www.apartments.com/des-moines-ia/"
@@ -44,7 +58,7 @@ def fetch_listings():
         time.sleep(5)
 
         page = 1
-        max_pages = 5
+        max_pages = 10
 
         while page <= max_pages and buildings_scraped < building_limit:
             logging.info(f"Scraping page {page}...")
@@ -63,6 +77,8 @@ def fetch_listings():
                     if listing_url in seen_building_urls:
                         continue
                     seen_building_urls.add(listing_url)
+
+                    logging.info(f"[{datetime.now().strftime('%H:%M:%S')}] Scraping building {buildings_scraped + 1} of page {page}")
 
                     listing_element = driver.find_element(By.XPATH, f"//a[@href='{listing_url}']")
                     driver.execute_script("arguments[0].click();", listing_element)
@@ -99,9 +115,19 @@ def fetch_listings():
                     break
 
     finally:
-        driver.quit()
 
-    return listings
+        with suppress_oserror_6():
+            driver.quit()
+            del driver
+
+            
+        
+        
+
+
+
+
+    return listings, buildings_scraped
 
 def get_building_name(driver):
     try:
@@ -207,6 +233,7 @@ def save_listings_to_db(listings):
 if __name__ == "__main__":
     listings = fetch_listings()
     if listings:
+        os.makedirs(EXPORT_DIR, exist_ok=True)  # <-- explicitly make sure it's created
         save_listings_to_csv(listings)
         save_listings_to_db(listings)
     else:

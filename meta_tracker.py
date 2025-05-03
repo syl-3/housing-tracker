@@ -4,9 +4,14 @@ import sqlite3
 import os
 from datetime import datetime
 
+
 # Dynamic DB path for Fly or local
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_NAME = os.environ.get("DB_PATH", os.path.join(BASE_DIR, "../housing_tracker.db"))
+DB_NAME = os.environ.get("DB_PATH", os.path.join(BASE_DIR, "housing_tracker.db"))
+
+print("meta_tracker is using this DB path:")
+print(DB_NAME)
+
 
 def get_db_connection():
     conn = sqlite3.connect(DB_NAME)
@@ -43,6 +48,9 @@ def get_last_updated():
     return row['last_updated'] if row else None
 
 if __name__ == "__main__":
+    print("[DEBUG] Ensuring meta table exists...")
     create_meta_table()
+    print("[DEBUG] Updating timestamp...")
     update_last_updated()
     print("Last updated set to:", get_last_updated())
+
