@@ -6,11 +6,12 @@ import sqlite3
 import os
 from datetime import datetime, date
 import logging
+from flask import send_from_directory
 
 # --- Setup ---
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_NAME = os.environ.get("DB_PATH", os.path.join(BASE_DIR, "../housing_tracker.db"))
+DB_NAME = os.environ.get("DB_PATH", "/app/db_volume/housing_tracker.db")
 
 def get_db_connection():
     conn = sqlite3.connect(DB_NAME)
@@ -36,7 +37,7 @@ def generate_signature(row):
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="dist")
     CORS(app)
 
     # --- Existing Routes ---
@@ -417,7 +418,12 @@ def create_app():
 
 
 
-
+    @app.route("/", defaults={"path": ""})
+    @app.route("/<path:path>")
+    def serve_react(path):
+        if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+            return send_from_directory(app.static_folder, path)
+        return send_from_directory(app.static_folder, "index.html")
 
 
 
