@@ -1,4 +1,4 @@
-# schedule.py
+# daily_scraper.py
 
 import time
 import schedule

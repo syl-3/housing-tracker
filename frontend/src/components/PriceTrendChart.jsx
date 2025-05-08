@@ -22,14 +22,18 @@ export default function PriceTrendChart() {
       .catch(console.error);
   }, []);
 
+  const filteredData = data.filter(item =>
+    new Date(item.scrape_date) >= new Date("2025-05-02")
+  );
+
   const chartData = {
-    labels: data.map(d => d.scrape_date),
+    labels: filteredData.map(d => d.scrape_date),
     datasets: [
       {
         label: "Median Rent",
-        data: data.map(d => d.median_price),
+        data: filteredData.map(d => d.median_price),
         fill: false,
-        borderColor: "rgb(239, 68, 68)", // Tailwind red-600
+        borderColor: "#dc2626", // Tailwind red-600
         tension: 0.3,
       },
     ],
@@ -46,15 +50,14 @@ export default function PriceTrendChart() {
         beginAtZero: false,
       },
       x: {
-        title: { display: true, text: "Scrape Date" },
+        title: { display: true, text: "Date" },
       },
     },
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow max-w-3xl mt-10">
-      <h3 className="text-lg font-semibold mb-4">Median Rent Trend</h3>
+    
       <Line data={chartData} options={options} />
-    </div>
+    
   );
 }

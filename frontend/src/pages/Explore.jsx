@@ -84,7 +84,7 @@ export default function Explore() {
       .then(res => res.json())
       .then(data => {
         setPriceChanges(data);
-        console.log("✅ Loaded priceChanges keys:", Object.keys(data.changes).slice(0, 5));
+        
       })
       .catch(err => console.error("Error fetching price changes:", err));
   }, [selectedDate]);
@@ -221,7 +221,7 @@ const priceBadges = useMemo(() => {
 
     if (changeData.change === "new") {
       badge = (
-  <span className="ml-2 inline-block min-w-[3rem] text-xs text-center text-blue-700 bg-blue-100 rounded px-2 py-0.5">
+  <span className="ml-2 inline-block min-w-[2rem] text-xs text-center text-blue-700 bg-blue-100 rounded px-2 py-0.5">
     New
   </span>
 );
@@ -232,7 +232,7 @@ const priceBadges = useMemo(() => {
       const color = isDrop ? "text-green-700 bg-green-100" : "text-red-700 bg-red-100";
 
       badge = (
-        <span className={`ml-2 inline-block min-w-[3rem] text-xs ${color} rounded px-2 py-0.5 text-center`}>
+        <span className={`ml-2 inline-block min-w-[2rem] text-xs ${color} rounded px-2 py-0.5 text-center`}>
   {isDrop ? "↓" : "↑"} ${Math.abs(delta)}
 </span>
 
@@ -266,7 +266,7 @@ useEffect(() => {
   return (
     <div className="p-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-3">
-  <h2 className="text-3xl font-semibold">Explore Nests</h2>
+  <h2 className="text-3xl font-semibold"></h2>
 
   <div className="flex flex-col sm:flex-row items-center gap-3 text-sm">
     {/* New / Movers */}
@@ -293,7 +293,7 @@ useEffect(() => {
     </div>
 
     {/* Divider 1 */}
-    <div className="hidden sm:block w-[2px] h-6 bg-zinc-300" />
+    <div className="hidden sm:block w-[1.5px] h-6 bg-zinc-300" />
 
     {/* Scrape Date + CSV */}
     <div className="flex items-center gap-2">
@@ -389,15 +389,7 @@ useEffect(() => {
 
 
 
-                console.log("👀 Trying badge for:", {
-                  unit_id: listing.unit_id,
-                  title: listing.title,
-                  unit_name: listing.unit_name,
-                  beds: listing.beds,
-                  baths: listing.baths,
-                  sqft: listing.sqft,
-                  price: listing.price
-                });
+                
 
                 return (
                   <tr key={listing.unit_id + listing.scrape_date} className="border-t hover:bg-zinc-100">
