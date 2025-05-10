@@ -16,7 +16,7 @@ export default function VolatilityBarChart() {
   const [dataPoints, setDataPoints] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/volatility-by-neighborhood")
+    fetch("/api/volatility-by-neighborhood")
       .then((res) => res.json())
       .then((json) => setDataPoints(json))
       .catch((err) => console.error("Error loading volatility data:", err));

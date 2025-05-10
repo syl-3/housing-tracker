@@ -3,7 +3,7 @@ import os
 
 # --- Setup ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_NAME = os.environ.get("DB_PATH", os.path.join(BASE_DIR, "housing_tracker.db"))
+DB_NAME = os.environ.get("DB_PATH", "/app/db_volume/housing_tracker.db")
 
 def dedupe_silver():
     conn = sqlite3.connect(DB_NAME)

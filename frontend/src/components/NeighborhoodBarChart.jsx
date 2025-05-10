@@ -14,7 +14,7 @@ export default function NeighborhoodBarChart() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/neighborhood-counts")
+    fetch("/api/neighborhood-counts")
       .then(res => res.json())
       .then(setData)
       .catch(console.error);

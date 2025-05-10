@@ -8,12 +8,12 @@ export default function MoversTodayTable({ date }) {
   useEffect(() => {
     if (!date) return;
 
-    fetch(`http://localhost:5000/api/silver-by-date/${date}`)
+    fetch(`/api/silver-by-date/${date}`)
       .then(res => res.json())
       .then(setListings)
       .catch(err => console.error("Fetch error:", err));
 
-    fetch(`http://localhost:5000/api/silver-changes?date=${date}`)
+    fetch(`/api/silver-changes?date=${date}`)
       .then(res => res.json())
       .then(data => setChanges(data.changes || {}))
       .catch(err => console.error("Changes fetch error:", err));
@@ -22,7 +22,7 @@ export default function MoversTodayTable({ date }) {
   useEffect(() => {
   if (!date) return;
 
-  fetch(`http://localhost:5000/api/silver-by-date/${date}`)
+  fetch(`/api/silver-by-date/${date}`)
     .then(res => res.json())
     .then(data => {
       setListings(data);
@@ -30,7 +30,7 @@ export default function MoversTodayTable({ date }) {
     })
     .catch(err => console.error("Fetch error:", err));
 
-  fetch(`http://localhost:5000/api/silver-changes?date=${date}`)
+  fetch(`/api/silver-changes?date=${date}`)
     .then(res => res.json())
     .then(data => {
       const changesObj = data.changes || {};

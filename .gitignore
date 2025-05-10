@@ -1,10 +1,11 @@
-# SQLite DB
+# Ignore the SQLite database (we're using volume)
 housing_tracker.db
 
-# CSV output
+# Ignore exported CSV files
 bronze/*.csv
+csv_exports/*.csv
 
-# Python stuff
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
@@ -13,9 +14,7 @@ __pycache__/
 venv/
 .env/
 
-# VS Code junk (optional)
+# Editor junk
 .vscode/
-
-# System files
 .DS_Store
 Thumbs.db

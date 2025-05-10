@@ -8,7 +8,7 @@ import logging
 # Setup
 # --------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_NAME = os.environ.get("DB_PATH", "/app/db_volume/housing_tracker.db")
+DB_NAME = "housing_tracker.db"
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 

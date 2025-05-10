@@ -1,0 +1,362 @@
+[INFO] Starting scheduled job at 2025-05-08 18:23:27
+[INFO] ====== WebDriver manager ======
+[INFO] Get LATEST chromedriver version for google-chrome
+[INFO] Get LATEST chromedriver version for google-chrome
+[INFO] Driver [C:\Users\firew\.wdm\drivers\chromedriver\win64\136.0.7103.92\chromedriver-win32/chromedriver.exe] found in cache
+[WARNING] could not detect version_main.therefore, we are assuming it is chrome 108 or higher
+[INFO] Scraping page 1...
+[INFO] [18:23:41] Scraping building 1 of page 1
+[INFO] [18:23:50] Scraping building 2 of page 1
+[INFO] \U0001f4dd Saved 82 listings to C:\Users\firew\Desktop\GitHub Projects\housing-tracker\scraper\../csv_exports\scraped_2025-05-08.csv
+[INFO] Bronze table and index ensured.
+[INFO] Inserted 82 listings into bronze_listings table.
+[INFO] Silver table and indexes ensured.
+[INFO] Cleared existing Silver listings for 2025-05-08
+[INFO] Promoted 119 listings into silver_listings table.
+[INFO] Gold table and index ensured.
+[INFO] Promoted 10 scrape days into gold_metrics table.
+meta_tracker is using this DB path:
+housing_tracker.db
+
+[2025-05-08 18:23:29] Starting housing scrape job...
+
+[WARNING] Only scraped 2 of 200 buildings.
+Traceback (most recent call last):
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\run.py", line 35, in <module>
+    print(f"\n[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] \u2705 Job complete.\n")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\firew\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 24: character maps to <undefined>
+Exception ignored in: <function Chrome.__del__ at 0x000001DB3B67A7A0>
+Traceback (most recent call last):
+  File "C:\Users\firew\AppData\Local\Programs\Python\Python313\Lib\site-packages\undetected_chromedriver\__init__.py", line 843, in __del__
+    self.quit()
+  File "C:\Users\firew\AppData\Local\Programs\Python\Python313\Lib\site-packages\undetected_chromedriver\__init__.py", line 798, in quit
+    time.sleep(0.1)
+OSError: [WinError 6] The handle is invalid
+[ERROR] Job failed: Command '['C:\\Users\\firew\\AppData\\Local\\Programs\\Python\\Python313\\python.exe', 'run.py']' returned non-zero exit status 1.
+[INFO] Scheduler started. Press Ctrl+C to exit.
+[INFO] ====== WebDriver manager ======
+[INFO] Get LATEST chromedriver version for google-chrome
+[INFO] Get LATEST chromedriver version for google-chrome
+[INFO] Get LATEST chromedriver version for google-chrome
+[INFO] WebDriver version 136.0.7103.92 selected
+[INFO] Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.92/win32/chromedriver-win32.zip
+[INFO] About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.92/win32/chromedriver-win32.zip
+[INFO] Driver downloading response is 200
+[INFO] Get LATEST chromedriver version for google-chrome
+[INFO] Driver has been saved in cache [C:\Users\firew\.wdm\drivers\chromedriver\win64\136.0.7103.92]
+[INFO] patching driver executable C:\Users\firew\.wdm\drivers\chromedriver\win64\136.0.7103.92\chromedriver-win32/chromedriver.exe
+[WARNING] could not detect version_main.therefore, we are assuming it is chrome 108 or higher
+[INFO] Scraping page 1...
+[INFO] [11:13:13] Scraping building 1 of page 1
+[INFO] [11:13:22] Scraping building 2 of page 1
+[INFO] [11:13:33] Scraping building 3 of page 1
+[INFO] [11:13:42] Scraping building 4 of page 1
+[INFO] [11:13:51] Scraping building 5 of page 1
+[INFO] [11:14:01] Scraping building 6 of page 1
+[INFO] [11:14:11] Scraping building 7 of page 1
+[INFO] [11:14:21] Scraping building 8 of page 1
+[INFO] [11:14:31] Scraping building 9 of page 1
+[INFO] [11:14:40] Scraping building 10 of page 1
+[INFO] [11:14:50] Scraping building 11 of page 1
+[INFO] [11:14:59] Scraping building 12 of page 1
+[WARNING] No unitContainer elements found for building: R&T Lofts (https://www.apartments.com/rt-lofts-des-moines-ia/b0r31l9/)
+[INFO] [11:15:09] Scraping building 13 of page 1
+[INFO] [11:15:19] Scraping building 14 of page 1
+[INFO] [11:15:29] Scraping building 15 of page 1
+[INFO] [11:15:39] Scraping building 16 of page 1
+[INFO] [11:15:47] Scraping building 17 of page 1
+[INFO] [11:15:56] Scraping building 18 of page 1
+[WARNING] No unitContainer elements found for building: The Lyon (https://www.apartments.com/the-lyon-des-moines-ia/rygwc22/)
+[INFO] [11:16:06] Scraping building 19 of page 1
+[INFO] [11:16:15] Scraping building 20 of page 1
+[INFO] [11:16:23] Scraping building 21 of page 1
+[INFO] [11:16:32] Scraping building 22 of page 1
+[INFO] [11:16:42] Scraping building 23 of page 1
+[INFO] [11:16:50] Scraping building 24 of page 1
+[INFO] [11:17:03] Scraping building 25 of page 1
+[INFO] [11:17:12] Scraping building 26 of page 1
+[WARNING] No unitContainer elements found for building: Park Avenue by Broadmoor (https://www.apartments.com/park-avenue-by-broadmoor-des-moines-ia/jj9gxd5/)
+[INFO] [11:17:22] Scraping building 27 of page 1
+[INFO] [11:17:31] Scraping building 28 of page 1
+[INFO] [11:17:42] Scraping building 29 of page 1
+[INFO] [11:17:51] Scraping building 30 of page 1
+[INFO] [11:18:00] Scraping building 31 of page 1
+[WARNING] No unitContainer elements found for building: Confluence on 3rd Apartments (https://www.apartments.com/confluence-on-3rd-apartments-des-moines-ia/ywmpssr/)
+[INFO] [11:18:10] Scraping building 32 of page 1
+[INFO] [11:18:20] Scraping building 33 of page 1
+[INFO] [11:18:30] Scraping building 34 of page 1
+[INFO] [11:18:40] Scraping building 35 of page 1
+[INFO] [11:18:50] Scraping building 36 of page 1
+[INFO] [11:19:00] Scraping building 37 of page 1
+[INFO] [11:19:09] Scraping building 38 of page 1
+[INFO] [11:19:19] Scraping building 39 of page 1
+[WARNING] No unitContainer elements found for building: Evergreen Terrace (https://www.apartments.com/evergreen-terrace-des-moines-ia/exbhe9m/)
+[INFO] [11:19:29] Scraping building 40 of page 1
+[INFO] Scraping page 2...
+[INFO] [11:19:46] Scraping building 41 of page 2
+[INFO] [11:19:56] Scraping building 42 of page 2
+[INFO] [11:20:05] Scraping building 43 of page 2
+[INFO] [11:20:14] Scraping building 44 of page 2
+[INFO] [11:20:23] Scraping building 45 of page 2
+[INFO] [11:20:34] Scraping building 46 of page 2
+[INFO] [11:20:43] Scraping building 47 of page 2
+[INFO] [11:20:53] Scraping building 48 of page 2
+[WARNING] No unitContainer elements found for building: The Residences at River View (https://www.apartments.com/the-residences-at-river-view-des-moines-ia/21bpk99/)
+[INFO] [11:21:03] Scraping building 49 of page 2
+[WARNING] No unitContainer elements found for building: Gateway Lofts (https://www.apartments.com/gateway-lofts-des-moines-ia/q24yn1x/)
+[INFO] [11:21:12] Scraping building 50 of page 2
+[WARNING] No unitContainer elements found for building: Windsor Square by Broadmoor (https://www.apartments.com/windsor-square-by-broadmoor-des-moines-ia/ej21w1n/)
+[INFO] [11:21:20] Scraping building 51 of page 2
+[INFO] [11:21:29] Scraping building 52 of page 2
+[INFO] [11:21:37] Scraping building 53 of page 2
+[INFO] [11:21:47] Scraping building 54 of page 2
+[INFO] [11:21:56] Scraping building 55 of page 2
+[INFO] [11:22:05] Scraping building 56 of page 2
+[INFO] [11:22:14] Scraping building 57 of page 2
+[INFO] [11:22:24] Scraping building 58 of page 2
+[INFO] [11:22:33] Scraping building 59 of page 2
+[INFO] [11:22:43] Scraping building 60 of page 2
+[INFO] [11:22:52] Scraping building 61 of page 2
+[INFO] [11:23:02] Scraping building 62 of page 2
+[WARNING] No unitContainer elements found for building: Carman Estates (https://www.apartments.com/carman-estates-des-moines-ia/pzjt1zs/)
+[INFO] [11:23:12] Scraping building 63 of page 2
+[INFO] [11:23:20] Scraping building 64 of page 2
+[INFO] [11:23:30] Scraping building 65 of page 2
+[INFO] [11:23:39] Scraping building 66 of page 2
+[WARNING] No unitContainer elements found for building: Windsor Terrace Apartments (https://www.apartments.com/windsor-terrace-apartments-des-moines-ia/cl8gekg/)
+[INFO] [11:23:49] Scraping building 67 of page 2
+[WARNING] No unitContainer elements found for building: Ingersoll Park Studios (https://www.apartments.com/ingersoll-park-studios-des-moines-ia/vmpzbpe/)
+[INFO] [11:23:58] Scraping building 68 of page 2
+[INFO] [11:24:08] Scraping building 69 of page 2
+[INFO] [11:24:17] Scraping building 70 of page 2
+[INFO] [11:24:26] Scraping building 71 of page 2
+[INFO] [11:24:34] Scraping building 72 of page 2
+[INFO] [11:24:44] Scraping building 73 of page 2
+[INFO] [11:24:53] Scraping building 74 of page 2
+[INFO] [11:25:03] Scraping building 75 of page 2
+[INFO] [11:25:13] Scraping building 76 of page 2
+[WARNING] No unitContainer elements found for building: Village on Grand (https://www.apartments.com/village-on-grand-des-moines-ia/thy6x18/)
+[INFO] [11:25:23] Scraping building 77 of page 2
+[WARNING] No unitContainer elements found for building: Lenox Properties (https://www.apartments.com/lenox-properties-des-moines-ia/75q65cz/)
+[INFO] [11:25:32] Scraping building 78 of page 2
+[WARNING] No unitContainer elements found for building: The Drake (https://www.apartments.com/the-drake-des-moines-ia/r5mj9l2/)
+[INFO] [11:25:41] Scraping building 79 of page 2
+[INFO] [11:25:50] Scraping building 80 of page 2
+[INFO] Scraping page 3...
+[INFO] [11:26:06] Scraping building 81 of page 3
+[INFO] [11:26:15] Scraping building 82 of page 3
+[WARNING] No unitContainer elements found for building: The Gardens Independent Plus (https://www.apartments.com/the-gardens-independent-plus-des-moines-ia/0njcee1/)
+[INFO] [11:26:25] Scraping building 83 of page 3
+[INFO] [11:26:34] Scraping building 84 of page 3
+[WARNING] No unitContainer elements found for building: Rivers Run (https://www.apartments.com/rivers-run-des-moines-ia/ecfnbqn/)
+[INFO] [11:26:43] Scraping building 85 of page 3
+[WARNING] No unitContainer elements found for building: Rose Glen (https://www.apartments.com/rose-glen-des-moines-ia/w7qznph/)
+[INFO] [11:26:52] Scraping building 86 of page 3
+[INFO] [11:27:01] Scraping building 87 of page 3
+[INFO] [11:27:11] Scraping building 88 of page 3
+[INFO] [11:27:20] Scraping building 89 of page 3
+[WARNING] No unitContainer elements found for building: Hamilton Apartments (https://www.apartments.com/hamilton-apartments-des-moines-ia/cpy5qkf/)
+[INFO] [11:27:29] Scraping building 90 of page 3
+[WARNING] No unitContainer elements found for building: Silhouette Apartments (https://www.apartments.com/silhouette-apartments-des-moines-ia/vgs5dxg/)
+[INFO] [11:27:38] Scraping building 91 of page 3
+[WARNING] No unitContainer elements found for building: 14Forty (https://www.apartments.com/14forty-des-moines-ia/yfec43s/)
+[INFO] [11:27:47] Scraping building 92 of page 3
+[INFO] [11:27:56] Scraping building 93 of page 3
+[INFO] [11:28:05] Scraping building 94 of page 3
+[INFO] [11:28:15] Scraping building 95 of page 3
+[INFO] [11:28:23] Scraping building 96 of page 3
+[WARNING] No unitContainer elements found for building: Rumely Lofts (https://www.apartments.com/rumely-lofts-des-moines-ia/29znq88/)
+[INFO] [11:28:33] Scraping building 97 of page 3
+[INFO] [11:28:42] Scraping building 98 of page 3
+[INFO] [11:28:50] Scraping building 99 of page 3
+[WARNING] No unitContainer elements found for building: Arlington Hallett (https://www.apartments.com/arlington-hallett-des-moines-ia/hdhjn23/)
+[INFO] [11:29:00] Scraping building 100 of page 3
+[INFO] [11:29:08] Scraping building 101 of page 3
+[INFO] [11:29:16] Scraping building 102 of page 3
+[INFO] [11:29:24] Scraping building 103 of page 3
+[INFO] [11:29:34] Scraping building 104 of page 3
+[INFO] [11:29:43] Scraping building 105 of page 3
+[INFO] [11:29:52] Scraping building 106 of page 3
+[INFO] [11:30:01] Scraping building 107 of page 3
+[INFO] [11:30:10] Scraping building 108 of page 3
+[WARNING] No unitContainer elements found for building: Beaverdale Housing LLC (https://www.apartments.com/beaverdale-housing-llc-des-moines-ia/l602kge/)
+[INFO] [11:30:19] Scraping building 109 of page 3
+[INFO] [11:30:28] Scraping building 110 of page 3
+[INFO] [11:30:37] Scraping building 111 of page 3
+[INFO] [11:30:47] Scraping building 112 of page 3
+[WARNING] No unitContainer elements found for building: Park Forest (https://www.apartments.com/park-forest-des-moines-ia/l7ghejg/)
+[INFO] [11:30:58] Scraping building 113 of page 3
+[INFO] [11:31:06] Scraping building 114 of page 3
+[INFO] [11:31:16] Scraping building 115 of page 3
+[WARNING] No unitContainer elements found for building: Civic Center Court Apartments (https://www.apartments.com/civic-center-court-apartments-des-moines-ia/r1128s3/)
+[INFO] [11:31:26] Scraping building 116 of page 3
+[INFO] [11:31:37] Scraping building 117 of page 3
+[INFO] [11:31:46] Scraping building 118 of page 3
+[INFO] [11:31:55] Scraping building 119 of page 3
+[WARNING] No unitContainer elements found for building: Hilltop Apartments (https://www.apartments.com/hilltop-apartments-des-moines-ia/10nf964/)
+[INFO] [11:32:05] Scraping building 120 of page 3
+[INFO] Scraping page 4...
+[INFO] [11:32:18] Scraping building 121 of page 4
+[INFO] [11:32:28] Scraping building 122 of page 4
+[WARNING] No unitContainer elements found for building: Flats on 5th (https://www.apartments.com/flats-on-5th-des-moines-ia/5l2rbmp/)
+[INFO] [11:32:37] Scraping building 123 of page 4
+[INFO] [11:32:46] Scraping building 124 of page 4
+[INFO] [11:32:56] Scraping building 125 of page 4
+[INFO] [11:33:05] Scraping building 126 of page 4
+[INFO] [11:33:15] Scraping building 127 of page 4
+[WARNING] No unitContainer elements found for building: East Village Square (https://www.apartments.com/east-village-square-des-moines-ia/lw7pmqg/)
+[INFO] [11:33:24] Scraping building 128 of page 4
+[INFO] [11:33:34] Scraping building 129 of page 4
+[WARNING] No unitContainer elements found for building: Magnolia Manor Apartments and Townhomes (https://www.apartments.com/magnolia-manor-apartments-and-townhomes-des-moines-ia/sw219f7/)
+[INFO] [11:33:43] Scraping building 130 of page 4
+[INFO] [11:33:51] Scraping building 131 of page 4
+[INFO] [11:34:01] Scraping building 132 of page 4
+[INFO] [11:34:11] Scraping building 133 of page 4
+[INFO] [11:34:24] Scraping building 134 of page 4
+[WARNING] No unitContainer elements found for building: Country Club Village Apartments (https://www.apartments.com/country-club-village-apartments-west-des-moines-ia/lz0l7kg/)
+[INFO] [11:34:33] Scraping building 135 of page 4
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/3902-e-38th-st-des-moines-ia/mj6xkjh/)
+[INFO] [11:34:44] Scraping building 136 of page 4
+[INFO] [11:34:54] Scraping building 137 of page 4
+[INFO] [11:35:03] Scraping building 138 of page 4
+[WARNING] No unitContainer elements found for building: Maxwell (https://www.apartments.com/maxwell-des-moines-ia/rv5yjn2/)
+[INFO] [11:35:12] Scraping building 139 of page 4
+[WARNING] No unitContainer elements found for building: Ingersoll Flats (https://www.apartments.com/ingersoll-flats-des-moines-ia/283ngpc/)
+[INFO] [11:35:22] Scraping building 140 of page 4
+[INFO] [11:35:31] Scraping building 141 of page 4
+[WARNING] No unitContainer elements found for building: Clover Hills Apartments (https://www.apartments.com/clover-hills-apartments-west-des-moines-ia/jgj9sd4/)
+[INFO] [11:35:40] Scraping building 142 of page 4
+[WARNING] No unitContainer elements found for building: The Windsor (https://www.apartments.com/the-windsor-windsor-heights-ia/vhqlf1f/)
+[INFO] [11:35:50] Scraping building 143 of page 4
+[INFO] [11:35:58] Scraping building 144 of page 4
+[INFO] [11:36:06] Scraping building 145 of page 4
+[WARNING] No unitContainer elements found for building: Harsunvest HKM - 5902-5906 Hickman Rd (https://www.apartments.com/harsunvest-hkm-5902-5906-hickman-rd-des-moines-ia/7gtc7nz/)
+[INFO] [11:36:16] Scraping building 146 of page 4
+[INFO] [11:36:24] Scraping building 147 of page 4
+[WARNING] No unitContainer elements found for building: Twin Oaks Residences (https://www.apartments.com/twin-oaks-residences-des-moines-ia/cg4zyce/)
+[INFO] [11:36:33] Scraping building 148 of page 4
+[WARNING] No unitContainer elements found for building: Luther Park Apartments (https://www.apartments.com/luther-park-apartments-des-moines-ia/r5046v1/)
+[INFO] [11:36:42] Scraping building 149 of page 4
+[WARNING] No unitContainer elements found for building: Bryn Mawr Apartments (https://www.apartments.com/bryn-mawr-apartments-des-moines-ia/kq7kvsc/)
+[INFO] [11:36:51] Scraping building 150 of page 4
+[INFO] [11:37:00] Scraping building 151 of page 4
+[WARNING] No unitContainer elements found for building: 718 18th St (https://www.apartments.com/718-18th-st-des-moines-ia/3qhe5pd/)
+[INFO] [11:37:10] Scraping building 152 of page 4
+[INFO] [11:37:19] Scraping building 153 of page 4
+[WARNING] No unitContainer elements found for building: Woodland Avenue Brickstone (https://www.apartments.com/woodland-avenue-brickstone-des-moines-ia/llq1rje/)
+[INFO] [11:37:28] Scraping building 154 of page 4
+[WARNING] No unitContainer elements found for building: The Flats on 56th Apartments (https://www.apartments.com/the-flats-on-56th-apartments-des-moines-ia/rfsfw30/)
+[INFO] [11:37:38] Scraping building 155 of page 4
+[WARNING] No unitContainer elements found for building: 10th Street Lofts (https://www.apartments.com/10th-street-lofts-des-moines-ia/n4mq04n/)
+[INFO] [11:37:47] Scraping building 156 of page 4
+[INFO] [11:37:57] Scraping building 157 of page 4
+[WARNING] No unitContainer elements found for building: Lovington Apartments (https://www.apartments.com/lovington-apartments-des-moines-ia/mvrw3eh/)
+[INFO] [11:38:06] Scraping building 158 of page 4
+[WARNING] No unitContainer elements found for building: Newens Dairy Lofts (https://www.apartments.com/newens-dairy-lofts-des-moines-ia/z1l1xcw/)
+[INFO] [11:38:15] Scraping building 159 of page 4
+[INFO] [11:38:23] Scraping building 160 of page 4
+[INFO] Scraping page 5...
+[INFO] [11:38:37] Scraping building 161 of page 5
+[WARNING] No unitContainer elements found for building: Old Main & Drake Apartments (https://www.apartments.com/old-main-drake-apartments-des-moines-ia/tysdzs9/)
+[INFO] [11:38:47] Scraping building 162 of page 5
+[WARNING] No unitContainer elements found for building: The Elmhurst (https://www.apartments.com/the-elmhurst-des-moines-ia/sxy74c7/)
+[INFO] [11:38:56] Scraping building 163 of page 5
+[WARNING] No unitContainer elements found for building: Pleasant Court (https://www.apartments.com/pleasant-court-des-moines-ia/xecwcgn/)
+[INFO] [11:39:05] Scraping building 164 of page 5
+[WARNING] No unitContainer elements found for building: The Vineyards (https://www.apartments.com/the-vineyards-des-moines-ia/9h1gvg7/)
+[INFO] [11:39:14] Scraping building 165 of page 5
+[INFO] [11:39:24] Scraping building 166 of page 5
+[INFO] [11:39:33] Scraping building 167 of page 5
+[WARNING] No unitContainer elements found for building: High Street Brickstone (https://www.apartments.com/high-street-brickstone-des-moines-ia/fj8zdms/)
+[INFO] [11:39:41] Scraping building 168 of page 5
+[INFO] [11:39:50] Scraping building 169 of page 5
+[INFO] [11:39:59] Scraping building 170 of page 5
+[WARNING] No unitContainer elements found for building: Virginia Park Affordable Apartments (https://www.apartments.com/virginia-park-affordable-apartments-des-moines-ia/4nht1mh/)
+[INFO] [11:40:08] Scraping building 171 of page 5
+[WARNING] No unitContainer elements found for building: MLK Brickstone Apartments (https://www.apartments.com/mlk-brickstone-apartments-des-moines-ia/jlny8n4/)
+[INFO] [11:40:17] Scraping building 172 of page 5
+[WARNING] No unitContainer elements found for building: Southern Meadows Homes (https://www.apartments.com/southern-meadows-homes-des-moines-ia/j745jq6/)
+[INFO] [11:40:25] Scraping building 173 of page 5
+[INFO] [11:40:34] Scraping building 174 of page 5
+[WARNING] No unitContainer elements found for building: Grand Homes (55+ Community) (https://www.apartments.com/grand-homes-55-community-des-moines-ia/55pgjxp/)
+[INFO] [11:40:43] Scraping building 175 of page 5
+[WARNING] No unitContainer elements found for building: Des Moines Greystone Homes (https://www.apartments.com/des-moines-greystone-homes-des-moines-ia/4wv5lkk/)
+[INFO] [11:40:52] Scraping building 176 of page 5
+[WARNING] No unitContainer elements found for building: Village Green (https://www.apartments.com/village-green-des-moines-ia/dwk3e5j/)
+[INFO] [11:41:01] Scraping building 177 of page 5
+[INFO] [11:41:10] Scraping building 178 of page 5
+[INFO] [11:41:20] Scraping building 179 of page 5
+[INFO] [11:41:29] Scraping building 180 of page 5
+[WARNING] No unitContainer elements found for building: Stockbridge Apartments (https://www.apartments.com/stockbridge-apartments-des-moines-ia/1b8k6q6/)
+[INFO] [11:41:37] Scraping building 181 of page 5
+[WARNING] No unitContainer elements found for building: Riverwood (https://www.apartments.com/riverwood-pleasant-hill-ia/b21h88b/)
+[INFO] [11:41:46] Scraping building 182 of page 5
+[WARNING] No unitContainer elements found for building: The Cottages of Pleasant Hill (https://www.apartments.com/the-cottages-of-pleasant-hill-pleasant-hill-ia/3gf6qcg/)
+[INFO] [11:41:55] Scraping building 183 of page 5
+[INFO] [11:42:04] Scraping building 184 of page 5
+[WARNING] No unitContainer elements found for building: Golfview Condos (https://www.apartments.com/golfview-condos-pleasant-hill-ia/yxpcjdv/)
+[INFO] [11:42:13] Scraping building 185 of page 5
+[WARNING] No unitContainer elements found for building: Peterson Place Apartments (https://www.apartments.com/peterson-place-apartments-pleasant-hill-ia/d42zpeh/)
+[INFO] [11:42:22] Scraping building 186 of page 5
+[WARNING] No unitContainer elements found for building: Rock Creek Condos (https://www.apartments.com/rock-creek-condos-altoona-ia/p4z79lv/)
+[INFO] [11:42:31] Scraping building 187 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/824-hartford-ave-des-moines-ia/lsg9vcg/)
+[INFO] [11:42:40] Scraping building 188 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/3612-ingersoll-ave-des-moines-ia/v6p7g7g/)
+[INFO] [11:42:50] Scraping building 189 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/2000-meadow-ct-des-moines-ia-unit-208/cb73xed/)
+[INFO] [11:42:59] Scraping building 190 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/3612-ingersoll-ave-des-moines-ia/hv2x1v0/)
+[INFO] [11:43:10] Scraping building 191 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/2000-meadow-ct-des-moines-ia-unit-201/z8d8tjz/)
+[INFO] [11:43:19] Scraping building 192 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/1540-pennsylvania-ave-des-moines-ia/f313jlr/)
+[INFO] [11:43:28] Scraping building 193 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/1328-e-28th-st-des-moines-ia/r3d7j20/)
+[INFO] [11:43:37] Scraping building 194 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/3320-valdez-ct-des-moines-ia/54746jn/)
+[INFO] [11:43:45] Scraping building 195 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/7000-lake-hill-dr-des-moines-ia/y334v4t/)
+[INFO] [11:43:54] Scraping building 196 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/1326-e-9th-st-des-moines-ia/42v2m6h/)
+[INFO] [11:44:03] Scraping building 197 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/2000-meadow-ct-des-moines-ia-unit-505/091rc00/)
+[INFO] [11:44:11] Scraping building 198 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/4924-madison-ave-des-moines-ia/ykf6r0s/)
+[INFO] [11:44:20] Scraping building 199 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/4219-clinton-ave-des-moines-ia/24ntysc/)
+[INFO] [11:44:29] Scraping building 200 of page 5
+[WARNING] No unitContainer elements found for building: None (https://www.apartments.com/4043-2nd-ave-des-moines-ia/ms3dcgh/)
+[INFO] \U0001f4dd Saved 984 listings to C:\Users\firew\Desktop\GitHub Projects\housing-tracker\scraper\../csv_exports\scraped_2025-05-09.csv
+[INFO] Bronze table and index ensured.
+[INFO] Inserted 984 listings into bronze_listings table.
+[INFO] Silver table and indexes ensured.
+[INFO] Cleared existing Silver listings for 2025-05-09
+[INFO] Promoted 772 listings into silver_listings table.
+[INFO] Gold table and index ensured.
+[INFO] Promoted 11 scrape days into gold_metrics table.
+meta_tracker is using this DB path:
+housing_tracker.db
+
+[2025-05-09 11:13:00] Starting housing scrape job...
+
+[INFO] Scraped full 200 buildings successfully.
+Traceback (most recent call last):
+  File "C:\Users\firew\Desktop\GitHub Projects\housing-tracker\run.py", line 35, in <module>
+    print(f"\n[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] \u2705 Job complete.\n")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\firew\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 24: character maps to <undefined>
+Exception ignored in: <function Chrome.__del__ at 0x00000220186FA840>
+Traceback (most recent call last):
+  File "C:\Users\firew\AppData\Local\Programs\Python\Python313\Lib\site-packages\undetected_chromedriver\__init__.py", line 843, in __del__
+    self.quit()
+  File "C:\Users\firew\AppData\Local\Programs\Python\Python313\Lib\site-packages\undetected_chromedriver\__init__.py", line 798, in quit
+    time.sleep(0.1)
+OSError: [WinError 6] The handle is invalid

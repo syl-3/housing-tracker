@@ -36,8 +36,10 @@ CHROME_PATH = os.environ.get("CHROMEDRIVER_PATH", ChromeDriverManager().install(
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
+
 def fetch_listings():
     options = uc.ChromeOptions()
+    #options.binary_location = "/usr/bin/google-chrome" #this is specific to this version, done for live launch!
     options.headless = True
     options.add_argument('--user-agent=Mozilla/5.0')
     options.add_argument('--disable-blink-features=AutomationControlled')
@@ -166,7 +168,13 @@ def scrape_floorplans(driver, building_name, listing_url):
             if match:
                 available_units = int(match.group(1))
 
+        # ✅ New: Check if unit containers exist
         unit_cards = soup.find_all('li', class_='unitContainer js-unitContainerV3')
+        if not unit_cards:
+            logging.warning(f"No unitContainer elements found for building: {building_name} ({listing_url})")
+            # OPTIONAL: Add placeholder row here if you want a record of zero-units
+            return []
+
         for unit in unit_cards:
             unit_id = unit.get('data-unit')
             if unit_id in seen_unit_ids:

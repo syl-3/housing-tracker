@@ -17,7 +17,7 @@ export default function UnitTypeTrendChart() {
   const [dataPoints, setDataPoints] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/gold-metrics-unit-types")
+    fetch("/api/gold-metrics-unit-types")
       .then((res) => res.json())
       .then((json) => setDataPoints(json))
       .catch((err) => {

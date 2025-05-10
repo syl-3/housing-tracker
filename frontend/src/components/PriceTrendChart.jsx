@@ -16,7 +16,7 @@ export default function PriceTrendChart() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/gold-metrics")
+    fetch("/api/gold-metrics")
       .then((res) => res.json())
       .then(setData)
       .catch(console.error);

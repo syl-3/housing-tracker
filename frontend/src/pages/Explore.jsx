@@ -59,7 +59,7 @@ export default function Explore() {
   }, [searchInput]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/scrape-dates")
+    fetch("/api/scrape-dates")
       .then(res => res.json())
       .then(data => {
         setDates(data);
@@ -71,7 +71,7 @@ export default function Explore() {
   useEffect(() => {
     if (!selectedDate) return;
 
-    fetch(`http://localhost:5000/api/silver-by-date/${selectedDate}`)
+    fetch(`/api/silver-by-date/${selectedDate}`)
       .then(res => res.json())
       .then(data => {
   const filtered = data.filter(d => d.price != null);
@@ -80,7 +80,7 @@ export default function Explore() {
 
       .catch(err => console.error("Error loading listings:", err));
 
-    fetch(`http://localhost:5000/api/silver-changes?date=${selectedDate}`)
+    fetch(`/api/silver-changes?date=${selectedDate}`)
       .then(res => res.json())
       .then(data => {
         setPriceChanges(data);

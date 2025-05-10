@@ -15,7 +15,7 @@ export default function PriceDistributionChart() {
   const [prices, setPrices] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/todays-prices")
+    fetch("/api/todays-prices")
       .then((res) => res.json())
       .then(setPrices)
       .catch(console.error);

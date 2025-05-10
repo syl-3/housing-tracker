@@ -9,19 +9,19 @@ export default function Insights() {
   const [maxPriceDrop, setMaxPriceDrop] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/avg-volatility")
+    fetch("/api/avg-volatility")
       .then(res => res.json())
       .then(data => setAvgVolatility(data.avg_volatility?.toFixed(1)));
 
-    fetch("http://localhost:5000/api/fastest-market")
+    fetch("/api/fastest-market")
       .then(res => res.json())
       .then(data => setFastestMarket(data.neighborhood));
 
-    fetch("http://localhost:5000/api/median-lifespan")
+    fetch("/api/median-lifespan")
       .then(res => res.json())
       .then(data => setMedianLifespan(data.median_days?.toFixed(1)));
 
-    fetch("http://localhost:5000/api/max-price-drop")
+    fetch("/api/max-price-drop")
       .then(res => res.json())
       .then(data => setMaxPriceDrop(data.max_drop));
   }, []);
@@ -57,13 +57,13 @@ export default function Insights() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-white shadow rounded p-4 flex flex-col h-[400px]">
           <h2 className="text-sm font-semibold text-zinc-700 mb-2">Unit Type Trendlines (Average Rent)</h2>
-          <div className="w-full flex-1">
+          <div className="w-full flex-1 overflow-hidden relative">
   <UnitTypeTrendChart />
 </div>
         </div>
         <div className="bg-white shadow rounded p-4 flex flex-col h-[400px]">
           <h2 className="text-sm font-semibold text-zinc-700 mb-2">Volatility Tracker</h2>
-          <div className="w-full flex-1">
+          <div className="w-full flex-1 overflow-hidden relative">
             <VolatilityBarChart />
           </div>
         </div>

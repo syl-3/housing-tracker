@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for redwing on 2025-05-07T22:08:55-05:00
+# fly.toml app configuration file generated for redwing-scraper on 2025-05-07T23:16:11-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -7,6 +7,10 @@ app = 'redwing'
 primary_region = 'ord'
 
 [build]
+
+[[mounts]]
+  source = 'redwing_volume'
+  destination = '/app/db_volume'
 
 [http_service]
   internal_port = 8080
@@ -20,8 +24,3 @@ primary_region = 'ord'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
-
-[mounts]
-  source = "redwing_volume"
-  destination = "/app/db_volume"
-

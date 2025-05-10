@@ -8,7 +8,7 @@ export default function Dashboard() {
   const [summary, setSummary] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/summary-stats")
+    fetch("/api/summary-stats")
       .then((res) => res.json())
       .then((data) => setSummary(data))
       .catch((err) => console.error("API error:", err));

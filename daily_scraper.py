@@ -20,8 +20,9 @@ def run_scraper():
     else:
         logging.info("Job finished successfully.")
 
+run_scraper()
 # Run once per day at 08:00
-schedule.every().day.at("08:00").do(run_scraper)
+schedule.every().day.at("17:00").do(run_scraper)
 ####run_scraper()
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ from datetime import datetime
 
 # Dynamic DB path for Fly or local
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_NAME = os.environ.get("DB_PATH", os.path.join(BASE_DIR, "housing_tracker.db"))
+DB_NAME = "housing_tracker.db"
 
 print("meta_tracker is using this DB path:")
 print(DB_NAME)
